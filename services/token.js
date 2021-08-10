@@ -9,6 +9,7 @@ module.exports = {
       {
         id: user.id,
         nombre: user.name,
+        actividad: user.activity,
       },
       "private.key",
       { expiresIn: duracion }

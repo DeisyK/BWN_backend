@@ -1,6 +1,15 @@
 const { body, params } = require("express-validator");
 
 const validation = {
+  changePassword:[
+    body("newPassword")
+      .notEmpty()
+      .withMessage("Tienes que enviar una nueva contraseña")
+      .bail()
+      .isLength({ min:8 })
+      .withMessage("Debe tener minimo 8 caracteres"),
+    body("oldPassword").notEmpty().withMessage("Tienes que enviar la contraseña actual")
+  ],
   login: [
     body("email")
       .notEmpty()

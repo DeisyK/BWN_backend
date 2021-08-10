@@ -7,7 +7,7 @@ router.get("/get-usuario", loginController.usuario);
 router.post("/into", validation.login, loginController.login);
 router.post("/register", validation.register, loginController.register);
 router.patch("/recovery", loginController.recovery);
-router.patch("/change/password", loginController.change);
+router.patch("/change/password", verifyUsuario,validation.checkPassword,loginController.change);
 router.patch("/:id/edit", verifyUsuario, loginController.edit);
 router.delete("/:id/destroy", verifyUsuario, loginController.destroy);
 

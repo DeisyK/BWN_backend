@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const { decode } = require("../services/token");
+const { validationResult } = require("express-validator");
 
 exports.list = async (req, res) => {
   try {
@@ -16,6 +17,11 @@ exports.list = async (req, res) => {
 
 exports.add = async (req, res, next) => {
   try {
+    const resultValidation = validationResult(req);
+
+    if (resultValidation.errors.length > 0) {
+      res.send({ errors: resultValidation.mapped() });
+    }
     const { id } = await decode(req.headers.token);
     const register = await db
       .Categorias({
@@ -33,6 +39,8 @@ exports.add = async (req, res, next) => {
 
 exports.one = async (req, res, next) => {
   try {
+    if (!req.params.id)
+      res.send({ error: "Tienes que enviar el id de la categoria" });
     const { id } = await decode(req.headers.token);
     let response = {
       categoria: null,
@@ -56,6 +64,11 @@ exports.one = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
+    const resultValidation = validationResult(req);
+
+    if (resultValidation.errors.length > 0) {
+      res.send({ errors: resultValidation.mapped() });
+    }
     const { id } = await decode(req.headers.token);
     const category = await db.Categorias.findOne({ _id: req.params.id });
     if (category.user_id === id) {

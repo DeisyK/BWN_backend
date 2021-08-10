@@ -127,6 +127,10 @@ exports.recovery = async (req, res, next) => {
 
 exports.change = async (req, res) => {
   try {
+    const resultValidation = validationResult(req);
+    if (resultValidation.errors.length > 0) {
+      res.send({ errors: resultValidation.mapped() });
+    }
     if (req.body.newPassword === req.body.confirmPassword) {
       const user = await decode(req.headers.token);
       if (user) {

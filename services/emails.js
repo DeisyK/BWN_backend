@@ -39,7 +39,7 @@ exports.register = async (user, password) => {
   </head>
   <body bgcolor="#fff">
   <h1>Hola ${name},</h1>
-  <h3>Gracias por usar BWN ya puedes empezar a usar tu cuenta usando tu email y la contraseña: ${password}</h3>
+  <h3>Gracias por usar BWN ya puedes empezar a usar tu cuenta usando tu email y la contraseña: ${password}, recuerde que para empezar a usar la aplicación debe cambiar la actual contraseña.</h3>
   </body>
   </html>
 `;
@@ -83,7 +83,7 @@ exports.recoveryPassword = async (user, password) => {
   </head>
   <body bgcolor="#fff">
   <h1>Hola ${name},</h1>
-  <h3>Tu nueva contraseña es: ${password}</h3>
+  <h3>Tu nueva contraseña es: ${password} , recuerde que para seguir usando la aplicación debe cambiar la actual contraseña.</h3>
   </body>
   </html>
 `;

@@ -65,6 +65,7 @@ exports.register = async (req, res, next) => {
           name: req.body.name,
           email: req.body.email,
           password: bcrypt.hashSync(password, salt),
+          activity: 0,
         })
         .save();
       console.log(register);
@@ -102,7 +103,7 @@ exports.recovery = async (req, res, next) => {
 
     const response = await db.User.updateOne(
       { email: req.body.email },
-      { password: bcrypt.hashSync(password, salt) }
+      { password: bcrypt.hashSync(password, salt), activity: 0 }
     );
     if (response.n === 1) {
       const one = await db.User.findOne({ email: req.body.email });
@@ -139,7 +140,10 @@ exports.change = async (req, res) => {
           const salt = bcrypt.genSaltSync(8);
           const response = await db.User.updateOne(
             { _id: user._id },
-            { password: bcrypt.hashSync(req.body.newPassword, salt) }
+            {
+              password: bcrypt.hashSync(req.body.newPassword, salt),
+              activity: 1,
+            }
           );
           if (response.n > 0) {
             res.send({
@@ -171,7 +175,7 @@ exports.edit = async (req, res) => {
     if (id === req.params.id) {
       const response = await db.User.updateOne(
         { _id: req.params.id },
-        { name: req.body.name, email: req.body.email }
+        { name: req.body.name }
       );
 
       if (response.n > 0) {

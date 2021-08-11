@@ -171,6 +171,7 @@ exports.edit = async (req, res) => {
     if (resultValidation.errors.length > 0) {
       res.send({ errors: resultValidation.mapped() });
     }
+    console.log(req.headers.token);
     const { id } = await decode(req.headers.token);
     if (id === req.params.id) {
       const response = await db.User.updateOne(

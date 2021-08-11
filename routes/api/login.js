@@ -15,7 +15,7 @@ router.patch(
 );
 router.patch(
   "/:id/edit",
-  validation.register,
+  validation.editUser,
   verifyUsuario,
   loginController.edit
 );

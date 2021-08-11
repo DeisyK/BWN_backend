@@ -31,6 +31,9 @@ const validation = {
       .isEmail()
       .withMessage("Ingresa un email valido"),
   ],
+  editUser: [
+    body("name").notEmpty().withMessage("Tiene que ingresar un nombre"),
+  ],
   recovery: [
     body("email")
       .notEmpty()

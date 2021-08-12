@@ -22,16 +22,21 @@ exports.add = async (req, res, next) => {
     if (resultValidation.errors.length > 0) {
       res.send({ errors: resultValidation.mapped() });
     }
-    const { id } = await decode(req.headers.token);
-    const register = await db
-      .Categorias({
-        name: req.body.name,
-        description: req.body.description,
-        user_id: id,
-      })
-      .save();
+    const exist = await db.Categorias.findOne({ name: req.body.name });
+    if (!exist) {
+      const { id } = await decode(req.headers.token);
+      const register = await db
+        .Categorias({
+          name: req.body.name,
+          description: req.body.description,
+          user_id: id,
+        })
+        .save();
 
-    res.send(register);
+      res.send(register);
+    } else {
+      res.send({ error: "La categoría ya existe, por favor use otro nombre" });
+    }
   } catch (error) {
     res.send({ error: "No se pudo agregar categoria" });
   }

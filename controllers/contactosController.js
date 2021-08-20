@@ -66,7 +66,7 @@ exports.add = async (req, res) => {
       .Contactos({
         name: req.body.name,
         address: req.body.address,
-        birthdate: req.body.birthdate,
+        birthdate: req.body.birthdate ? new Date(req.body.birthdate) : null,
         country: req.body.country,
         cellphone: req.body.cellphone,
         notes: req.body.notes,
